@@ -28,6 +28,10 @@ app.get('/getuser', (req, res) => {
     res.send(req.user);
 })
 
+app.get('/test', (req, res) => {
+    res.send('test')
+})
+
 spotifyApi.clientCredentialsGrant()
 .then((data) => {
 spotifyApi.setAccessToken(data.body['access_token']);
