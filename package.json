@@ -30,7 +30,6 @@
     "passport": "^0.6.0",
     "passport-github2": "^0.1.12",
     "passport-google-oauth20": "^2.0.0",
-    "socket.io": "^4.6.2",
     "spotify-web-api-node": "^5.0.2",
     "twit": "^2.2.11",
     "twitter-api-v2": "^1.15.0"
