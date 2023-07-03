@@ -1,9 +1,9 @@
 import { Trash2 } from 'lucide-react';
 import Song from './Song.tsx'
+import { PlaylistInterface, SongInterface } from './Playlist.tsx';
 
-function PlaylistSongs(props) {
-  const { playlist, deleteSongFromPlaylist, audioPlayer, isPlaying, currentSong, handlePreview } = props;
-  let playlistElement = []
+function PlaylistSongs({ playlist, deleteSongFromPlaylist, isPlaying, currentSong, handlePreview } : { playlist: PlaylistInterface, deleteSongFromPlaylist: (songId: SongInterface["spotifyId"]) => void, isPlaying: boolean, currentSong: SongInterface | undefined, handlePreview: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, song: SongInterface) => void }) {
+  let playlistElement = [] as Array<JSX.Element>;
   if(playlist.songs) {
       playlistElement = playlist.songs
       .sort((a,b) => {

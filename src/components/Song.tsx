@@ -1,9 +1,9 @@
 import { Pause, Play } from 'lucide-react'
+import { SongInterface } from './Playlist';
 
-function Song(props) {
-    const { song, onPreview, isPlaying, currentSong } = props;
+function Song({ song, onPreview, isPlaying, currentSong } : { song: SongInterface, onPreview: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, song: SongInterface) => void, isPlaying: boolean, currentSong: SongInterface | undefined}) {
 
-    const handlePreview = (e,song) => {
+    const handlePreview = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, song: SongInterface) => {
         console.log(song)
         onPreview(e, song);
       };

@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import SpotifySongList from './SpotifySongList.js';
+import { SongInterface } from './Playlist'
+import { PlaylistInterface } from './Playlist'
 
 
-export default function AddSongForm(props) {
+export default function AddSongForm(props: { addSongToPlaylist: (song : SongInterface) => void, playlist: PlaylistInterface, disableComponent: boolean, audioPlayer: HTMLAudioElement | undefined, isPlaying: boolean, currentSong: SongInterface | undefined, handlePreview: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, song: SongInterface) => void }) {
     const [songNameInput, setSongNameInput] = useState('');
-    const { addSongToPlaylist, playlist, disableComponent, audioPlayer, isPlaying, currentSong, handlePreview } = props
+    const { addSongToPlaylist, playlist, disableComponent, isPlaying, currentSong, handlePreview } = props
     
 
     return (
@@ -18,7 +20,6 @@ export default function AddSongForm(props) {
             playlist={playlist} 
             songNameInput={songNameInput} 
             addSongToPlaylist={addSongToPlaylist} 
-            audioPlayer={audioPlayer}
             isPlaying={isPlaying}
             currentSong={currentSong}
             handlePreview={handlePreview}

@@ -4,20 +4,27 @@ import PlaylistSongs from "./PlaylistSongs.tsx"
 import PlaylistActionButtons from './PlaylistActionButtons.tsx'
 import AddSongForm from './AddSongForm.tsx';
 
-interface Playlist {
+export interface PlaylistInterface {
     _id: string;
     name: string;
-    songs: Array<string>;
+    songs: Array<SongInterface>;
 }
 
-export default function Playlist(props) {
+export interface SongInterface {
+    spotifyId: string;
+    name: string;
+    artist: string;
+    previewUrl: string;
+    imageUrl: string;
+}
+
+export default function Playlist({ updatePlaylistName, deletePlaylist, playlists, fetchPlaylists }: {updatePlaylistName: (id: string | undefined, updatedPlaylistName: string) => void, deletePlaylist: (id: string | undefined) => void, playlists: Array<PlaylistInterface>, fetchPlaylists: () => void}) {
     const { id } = useParams();
-    const [playlist, setPlaylist] = useState({} as Playlist);
-    const { updatePlaylistName, deletePlaylist, playlists, fetchPlaylists } = props
+    const [playlist, setPlaylist] = useState({} as PlaylistInterface);
     const [disableComponent, setDisableComponent] = useState(false)
-    const [audioPlayer, setAudioPlayer] = useState(null)
+    const [audioPlayer, setAudioPlayer] = useState<HTMLAudioElement>()
     const [isPlaying, setIsPlaying] = useState(false)
-    const [currentSong, setCurrentSong] = useState(null)
+    const [currentSong, setCurrentSong] = useState<SongInterface | undefined>(undefined)
 
     useEffect(() => {
         if(audioPlayer) {
@@ -33,13 +40,13 @@ export default function Playlist(props) {
         }
     },[isPlaying, currentSong, audioPlayer])
 
-    const handlePreview = (e, song) => {
+    const handlePreview = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>, song: SongInterface) => {
       e.stopPropagation()
-      if(isPlaying) {
+      if(isPlaying && currentSong) {
           console.log('current song: ', currentSong, 'clicked song: ', song)
           if(currentSong.spotifyId === song.spotifyId) {
               setIsPlaying(false)
-              setCurrentSong(null)
+              setCurrentSong(undefined)
           } else {
               setCurrentSong(song)
           }
@@ -55,7 +62,7 @@ export default function Playlist(props) {
     return () => {
         audio.pause()
         audio.src = ''
-        setAudioPlayer(null)
+        setAudioPlayer(undefined)
         setIsPlaying(false)
     }
   },[playlist])
@@ -64,6 +71,7 @@ export default function Playlist(props) {
   useEffect(() => {
     fetchPlaylist();
     console.log('playlist fetched', playlists)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [playlists, id]);
 
   useEffect(() => {
@@ -73,7 +81,7 @@ export default function Playlist(props) {
 
 
     const fetchPlaylist = () => {
-      fetch(`http://localhost:5000/playlists/${id}`)
+      fetch(`${process.env.BACK_END_URI}/playlists/${id}`)
         .then(response => response.json())
         .then(data => {
           setPlaylist(data)
@@ -81,13 +89,13 @@ export default function Playlist(props) {
     }
 
 
-    const addSongToPlaylist = (song) => {
+    const addSongToPlaylist = (song: SongInterface) => {
       if(playlist) {
         const songExists = playlist.songs.some(playlistSong => playlistSong.name === song.name)
         setDisableComponent(true)
         setIsPlaying(false)
         if (!songExists) {
-          fetch(`http://localhost:5000/playlists/addSong/${id}`, {
+          fetch(`${process.env.BACK_END_URI}/playlists/addSong/${id}`, {
             method: 'PUT', 
             headers: {
               'Content-Type': 'application/json',
@@ -108,9 +116,9 @@ export default function Playlist(props) {
       }
     }
 
-    const deleteSongFromPlaylist = (songId) => {
+    const deleteSongFromPlaylist = (songId : SongInterface["spotifyId"]) => {
       setIsPlaying(false)
-      fetch(`http://localhost:5000/playlists/deleteSong/${id}/${songId}`, {
+      fetch(`${process.env.BACK_END_URI}/playlists/deleteSong/${id}/${songId}`, {
         method: 'PUT', 
         headers: {
           'Content-Type': 'application/json',
@@ -135,7 +143,6 @@ export default function Playlist(props) {
            <PlaylistSongs 
             deleteSongFromPlaylist={deleteSongFromPlaylist} 
             playlist={playlist}
-            audioPlayer={audioPlayer}
             isPlaying={isPlaying}
             currentSong={currentSong}
             handlePreview={handlePreview}/>

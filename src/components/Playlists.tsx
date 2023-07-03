@@ -1,14 +1,13 @@
-import { Plus } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { SongInterface } from './Playlist';
 
-interface Playlist {
+interface PlaylistInterface {
     _id: string;
     name: string;
-    songs: Array<string>;
+    songs: Array<SongInterface>;
 }
 
-export default function Playlists(props) {
-    const { playlists } = props
+export default function Playlists({ playlists } : {playlists: Array<PlaylistInterface>}) {
 
     const imagesArray = playlists.map(playlist => playlist.songs.map(song => song.imageUrl))
     console.log(imagesArray)
@@ -18,7 +17,7 @@ export default function Playlists(props) {
                 <div className='font-bold'>Your playlists</div>
             </div>
             <div className='flex gap-4 mt-3'>
-                {playlists.map((playlist : Playlist) => (
+                {playlists.map((playlist : PlaylistInterface) => (
                         <Link key={playlist._id} to={`/playlists/${playlist._id}`}>
                         <div className="card card-compact w-48 h-72 bg-base-200 text-base-content shadow-xl">
                                 <figure>

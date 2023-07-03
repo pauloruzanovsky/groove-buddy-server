@@ -1,18 +1,10 @@
 import { Link } from 'react-router-dom'
 import NewPlaylistModal from './NewPlaylistModal';
+import { UserInterface } from './Context'
 
-interface userObjectProps {
-    _id: string;
-    email: string;
-    googleId?: string;
-    githubId?: string;
-    name: string;
-    picture: string;
-
-}
-export default function Header({userObject, playlistInput, setPlaylistInput, createPlaylist} : {userObject: userObjectProps, playlistInput: string, setPlaylistInput: () => void, createPlaylist: () => void }) {
+export default function Header({userObject, playlistInput, setPlaylistInput, createPlaylist} : {userObject: UserInterface | undefined, playlistInput: string, setPlaylistInput: React.Dispatch<React.SetStateAction<string>>, createPlaylist: (e: React.FormEvent, playlistInput: string) => void}) {
     const logout = () => {
-       fetch("http://localhost:5000/auth/logout", {
+       fetch(`${process.env.BACK_END_URI}/auth/logout`, {
         method: "GET",
         credentials: "include",
        })

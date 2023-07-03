@@ -5,16 +5,16 @@ import Playlists from './Playlists.tsx'
 import Playlist from './Playlist.tsx';
 import { Routes, Route, useNavigate } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute.tsx';
-import NewPlaylistModal from './NewPlaylistModal.tsx';
+import {PlaylistInterface} from './Playlist.tsx'
 
 function Content () {
     const userObject = useContext(myContext)
-    const [playlists, setPlaylists] = useState<[]>([]);
+    const [playlists, setPlaylists] = useState([]);
     const navigate = useNavigate()
     const [playlistInput, setPlaylistInput] = useState('');
 
     const fetchPlaylists = () => {
-            fetch('http://localhost:5000/playlists')
+            fetch(`${process.env.BACK_END_URI}/playlists`)
                 .then(response => response.json())
                 .then(data => {
                     setPlaylists(data)
@@ -26,7 +26,7 @@ function Content () {
         fetchPlaylists();
     },[])
 
-    const createPlaylist = (e: React.FormEvent, playlistInput) => {
+    const createPlaylist = (e: React.FormEvent, playlistInput: string) => {
         e.preventDefault();
         if(playlistInput) {
             const newPlaylist =  {
@@ -34,7 +34,7 @@ function Content () {
                 songs: []
             }
     
-            fetch('http://localhost:5000/playlists/create', {
+            fetch(`${process.env.BACK_END_URI}/playlists/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -49,9 +49,9 @@ function Content () {
         }
     }   
 
-    const updatePlaylistName = (id, updatedPlaylistName) => {
-        if(playlists.filter(playlist => playlist.name === updatedPlaylistName).length === 0) {
-            fetch(`http://localhost:5000/playlists/${id}`, {
+    const updatePlaylistName = (id: string | undefined, updatedPlaylistName: string) => {
+        if(playlists.filter((playlist:PlaylistInterface) => playlist.name === updatedPlaylistName).length === 0) {
+            fetch(`${process.env.BACK_END_URI}/playlists/${id}`, {
                 method: 'PUT',
                 headers: {
                 'Content-Type': 'application/json',
@@ -63,7 +63,7 @@ function Content () {
 
             const newPlaylists = [...playlists]
             
-                newPlaylists.forEach(playlist => {
+                newPlaylists.forEach((playlist:PlaylistInterface) => {
                 if (playlist._id === id) {
                     playlist.name = updatedPlaylistName
                 }
@@ -72,8 +72,8 @@ function Content () {
           }
     }
 
-    const deletePlaylist = (id) => {
-        fetch(`http://localhost:5000/playlists/${id}`, {
+    const deletePlaylist = (id: string | undefined) => {
+        fetch(`${process.env.BACK_END_URI}/playlists/${id}`, {
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
@@ -83,7 +83,7 @@ function Content () {
             }),
           }).then(fetchPlaylists)
           navigate('/')
-          const newPlaylists = playlists.filter(playlist => playlist._id !== id)
+          const newPlaylists = playlists.filter((playlist:PlaylistInterface) => playlist._id !== id)
           setPlaylists(newPlaylists)
 
     }

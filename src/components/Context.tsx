@@ -1,14 +1,23 @@
 import { createContext, useEffect, useState } from 'react'
 import axios from 'axios'
 
-export const myContext = createContext({});
+// eslint-disable-next-line react-refresh/only-export-components
+export const myContext = createContext<UserInterface | undefined>(undefined);
 
-export default function Context(props : any) {
+export interface UserInterface {
+    _id: string
+    email: string
+    googleId: string
+    name: string
+    picture: string
+}
 
-    const [userObject, setUserObject] = useState<any>()
+export default function Context({children} : { children:JSX.Element}) {
+
+    const [userObject, setUserObject] = useState<UserInterface>()
     
     useEffect(() => {
-        axios.get("http://localhost:5000/getuser", { withCredentials: true }).then((res) => {
+        axios.get(`${process.env.BACK_END_URI}/getuser`, { withCredentials: true }).then((res) => {
             if(res.data){
                 console.log('context res:', res.data)
                 setUserObject(res.data)
@@ -17,7 +26,7 @@ export default function Context(props : any) {
     },[])
     return(
         <myContext.Provider value={userObject}>
-        {props.children}
+        {children}
         </myContext.Provider>
     )
 }

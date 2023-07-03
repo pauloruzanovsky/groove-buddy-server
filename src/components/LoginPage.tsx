@@ -1,13 +1,12 @@
 
-import { Button } from "./ui/button"
 import LoginImg from '../assets/LoginImg.png'
 
 export default function LoginPage() {
     const handleGoogleSignIn = () => {
-        window.open("http://localhost:5000/auth/google","_self")
+        window.open(`${process.env.BACK_END_URI}/auth/google`,"_self")
         }
     const handleGithubSignIn = () => {
-        window.open("http://localhost:5000/auth/github","_self")
+        window.open(`${process.env.BACK_END_URI}/auth/github`,"_self")
         }  
     return(
         <div className='grid grid-cols-2 min-h-screen bg-gray-900'>

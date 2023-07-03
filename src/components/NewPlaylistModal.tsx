@@ -1,5 +1,5 @@
 
-function NewPlaylistModal(props) {
+function NewPlaylistModal(props: {createPlaylist: (e: React.FormEvent, playlistInput: string) => void, playlistInput: string, setPlaylistInput: React.Dispatch<React.SetStateAction<string>>}) {
     const { createPlaylist, setPlaylistInput, playlistInput } = props
 
     return (
