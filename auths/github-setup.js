@@ -12,7 +12,7 @@ passport.use(
         {
             clientID: process.env.GITHUB_CLIENT_ID,
             clientSecret: process.env.GITHUB_CLIENT_SECRET,
-            callbackURL: 'https://groove-buddy-server.cyclic.app/auth/github/callback'
+            callbackURL: `${process.env.BACKEND_URI}/auth/github/callback`
         },
         async (accessToken, refreshToken, profile, done) => {
             let user = await db.collection('users').findOne({ githubId: profile.node_id })
