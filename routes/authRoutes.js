@@ -5,14 +5,22 @@ import passport from 'passport';
 const authRouter = express.Router();
 
 
-authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'], failureFlash: true}));
 authRouter.get('/google/callback', passport.authenticate('google'), (req, res) => {
-    res.redirect('https://groove-buddy-server.cyclic.app/');
+    try {
+        res.redirect('https://groove-buddy-server.cyclic.app/');
+    } catch (error) {
+        console.log(error);
+    }
 })
 
-authRouter.get('/github', passport.authenticate('github', { scope: ['profile', 'email'] }));
+authRouter.get('/github', passport.authenticate('github', { scope: ['profile', 'email'], failureFlash: true }));
 authRouter.get('/github/callback', passport.authenticate('github'), (req, res) => {
-    res.redirect('https://groove-buddy-server.cyclic.app/');
+    try {
+        res.redirect('https://groove-buddy-server.cyclic.app/');
+    } catch (error) {
+        console.log(error);
+    }
 })
 
 authRouter.get('/logout', (req, res) => {
