@@ -36,8 +36,6 @@ passport.use(
     )
 )
 
-console.log('githubpassport')
-
 passport.serializeUser((user,done) => {
     done(null, user.githubId)
 })

@@ -15,7 +15,7 @@ app.use(cors( {
     credentials: true
 }))
 app.use(express.json());
-
+app.enable("trust proxy");
 
 googleSetup(app);
 githubSetup(app)
