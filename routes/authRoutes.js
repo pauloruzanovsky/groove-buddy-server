@@ -7,12 +7,12 @@ const authRouter = express.Router();
 
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 authRouter.get('/google/callback', passport.authenticate('google'), (req, res) => {
-    res.redirect('http://localhost:5173');
+    res.redirect('https://groove-buddy-server.cyclic.app/');
 })
 
 authRouter.get('/github', passport.authenticate('github', { scope: ['profile', 'email'] }));
 authRouter.get('/github/callback', passport.authenticate('github'), (req, res) => {
-    res.redirect('http://localhost:5173');
+    res.redirect('https://groove-buddy-server.cyclic.app/');
 })
 
 authRouter.get('/logout', (req, res) => {

@@ -11,7 +11,7 @@ dotenv.config({ path: './config/config.env' });
 
 const app = express();
 app.use(cors( {
-    origin: 'http://localhost:5173',
+    origin: 'https://localhost:5173',
     credentials: true
 }))
 app.use(express.json());
@@ -28,8 +28,8 @@ app.get('/getuser', (req, res) => {
     res.send(req.user);
 })
 
-app.get('/test', (req, res) => {
-    res.send('test')
+app.get('/', (req, res) => {
+    res.send('hello!')
 })
 
 spotifyApi.clientCredentialsGrant()
