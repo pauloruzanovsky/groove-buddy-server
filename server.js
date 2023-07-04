@@ -7,7 +7,18 @@ import githubSetup from './auths/github-setup.js';
 import cors from 'cors'
 import dotenv from 'dotenv';
 import spotifyApi from './auths/spotifyAuth.js';
+const mongoose = require('mongoose')
 dotenv.config({ path: './config/config.env' });
+
+const connectDB = async () => {
+    try {
+      const conn = await mongoose.connect(process.env.MONGO_URI);
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  }
 
 const app = express();
 // app.use(cors( {
@@ -30,7 +41,7 @@ app.get('/getuser', (req, res) => {
 })
 
 app.get('/', (req, res) => {
-    res.send(process.env.GITHUB_CLIENT_ID)
+    res.send('hello!')
 })
 
 spotifyApi.clientCredentialsGrant()
@@ -46,4 +57,6 @@ console.log(err);
   
 const PORT = process.env.PORT;
 
-app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+connectDB().then(() => {
+    app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
+})
