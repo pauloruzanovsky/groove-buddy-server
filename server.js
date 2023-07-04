@@ -7,12 +7,12 @@ import githubSetup from './auths/github-setup.js';
 import cors from 'cors'
 import dotenv from 'dotenv';
 import spotifyApi from './auths/spotifyAuth.js';
-const mongoose = require('mongoose')
+import mongoose from 'mongoose';
 dotenv.config({ path: './config/config.env' });
 
 const connectDB = async () => {
     try {
-      const conn = await mongoose.connect(process.env.MONGO_URI);
+      const conn = await mongoose.connect(process.env.MONGODB_URI);
       console.log(`MongoDB Connected: ${conn.connection.host}`);
     } catch (error) {
       console.log(error);
@@ -21,10 +21,10 @@ const connectDB = async () => {
   }
 
 const app = express();
-// app.use(cors( {
-//     origin: 'https://localhost:5173',
-//     credentials: true
-// }))
+app.use(cors( {
+    origin: 'https://localhost:5173',
+    credentials: true
+}))
 
 app.use(express.json());
 app.enable("trust proxy");
