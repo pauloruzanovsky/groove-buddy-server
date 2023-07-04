@@ -22,7 +22,7 @@ const connectDB = async () => {
 
 const app = express();
 app.use(cors( {
-    origin: 'https://localhost:5173',
+    origin: "*",
     credentials: true
 }))
 
@@ -37,10 +37,13 @@ app.use('/playlists', playlistRouter);
 app.use('/spotify', spotifyRouter);
 
 app.get('/getuser', (req, res) => {
+    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Credentials', true);
     res.send(req.user);
 })
 
 app.get('/', (req, res) => {
+    
     res.send('hello!')
 })
 
@@ -55,7 +58,7 @@ spotifyApi.searchTracks(songName, {limit: 1}).then((data) => {
 console.log(err);
 })})
   
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 connectDB().then(() => {
     app.listen(PORT, console.log(`Server running on port ${PORT}`));
