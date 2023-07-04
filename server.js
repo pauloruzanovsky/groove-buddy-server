@@ -22,7 +22,7 @@ const connectDB = async () => {
 
 const app = express();
 app.use(cors( {
-    origin: "*",
+    origin: "https://groove-buddy.netlify.app",
     credentials: true
 }))
 
