@@ -10,15 +10,15 @@ import spotifyApi from './auths/spotifyAuth.js';
 import mongoose from 'mongoose';
 dotenv.config({ path: './config/config.env' });
 
-// const connectDB = async () => {
-//     try {
-//       const conn = await mongoose.connect(process.env.MONGODB_URI);
-//       console.log(`MongoDB Connected: ${conn.connection.host}`);
-//     } catch (error) {
-//       console.log(error);
-//       process.exit(1);
-//     }
-//   }
+const connectDB = async () => {
+    try {
+      const conn = await mongoose.connect(process.env.MONGODB_URI);
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  }
 
 const app = express();
 app.use(cors( {
@@ -57,6 +57,6 @@ console.log(err);
   
 const PORT = 3000;
 
-// connectDB().then(() => {
+connectDB().then(() => {
     app.listen(PORT, console.log(`Server running on port ${PORT}`));
-// })
+})
