@@ -55,7 +55,7 @@ spotifyApi.searchTracks(songName, {limit: 1}).then((data) => {
 console.log(err);
 })})
   
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 
 connectDB().then(() => {
     app.listen(PORT, console.log(`Server running in ${process.env.NODE_ENV} mode on port ${PORT}`));
