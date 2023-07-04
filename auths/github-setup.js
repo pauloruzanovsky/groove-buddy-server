@@ -15,8 +15,8 @@ passport.use(
             callbackURL: 'https://groove-buddy-server.cyclic.app/auth/github/callback'
         },
         async (accessToken, refreshToken, profile, done) => {
-            let user = await db.collection('users').findOne({ githubId: profile.node_id })
-            // let user = { githubId: '1', name: 'john', email: 'john@gmail.com', picture: 'john.jpg' }
+            // let user = await db.collection('users').findOne({ githubId: profile.node_id })
+            let user = { githubId: '1', name: 'john', email: 'john@gmail.com', picture: 'john.jpg' }
             try {
                 if(user) {
                     done(null, user)
@@ -27,7 +27,7 @@ passport.use(
                         email: profile.emails[0].value,
                         picture: profile.photos[0].value
                     })
-                    db.collection('users').insertOne(user)
+                    // db.collection('users').insertOne(user)
                     done(null, user)
                 }
             } catch (error) {
