@@ -29,12 +29,12 @@ app.use(cors( {
 app.use(express.json());
 app.enable("trust proxy");
 
-// googleSetup(app);
-// githubSetup(app)
+googleSetup(app);
+githubSetup(app)
 
-// app.use('/auth', authRouter);
-// app.use('/playlists', playlistRouter);
-// app.use('/spotify', spotifyRouter);
+app.use('/auth', authRouter);
+app.use('/playlists', playlistRouter);
+app.use('/spotify', spotifyRouter);
 
 app.get('/getuser', (req, res) => {
     res.send(req.user);
@@ -44,16 +44,16 @@ app.get('/', (req, res) => {
     res.send('hello!')
 })
 
-// spotifyApi.clientCredentialsGrant()
-// .then((data) => {
-// spotifyApi.setAccessToken(data.body['access_token']);
-// const songName = 'num'
-// spotifyApi.searchTracks(songName, {limit: 1}).then((data) => {
-//     const songsArray = data.body.tracks.items.map(song => ({name:song.name, artist:song.artists[0].name,  }))
-//     console.log('a: ',data.body.tracks.items[0].id)
-// }).catch((err) => {
-// console.log(err);
-// })})
+spotifyApi.clientCredentialsGrant()
+.then((data) => {
+spotifyApi.setAccessToken(data.body['access_token']);
+const songName = 'num'
+spotifyApi.searchTracks(songName, {limit: 1}).then((data) => {
+    const songsArray = data.body.tracks.items.map(song => ({name:song.name, artist:song.artists[0].name,  }))
+    console.log('a: ',data.body.tracks.items[0].id)
+}).catch((err) => {
+console.log(err);
+})})
   
 const PORT = 3000;
 
