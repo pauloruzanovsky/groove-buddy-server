@@ -37,7 +37,7 @@ app.use('/playlists', playlistRouter);
 app.use('/spotify', spotifyRouter);
 
 app.get('/getuser', (req, res) => {
-    res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+    res.header('Access-Control-Allow-Origin', process.env.FRONT_END_URI)
     res.header('Access-Control-Allow-Credentials', true);
     res.send(req.user);
 })

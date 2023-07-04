@@ -8,7 +8,9 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [react()],
     define: {
-      'process.env.BACK_END_URI': JSON.stringify(env.BACK_END_URI)
+      'process.env.BACK_END_URI': JSON.stringify(env.BACK_END_URI),
+      'process.env.FRONT_END_URI': JSON.stringify(env.FRONT_END_URI)
+
     }
   }
   });

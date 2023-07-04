@@ -8,7 +8,8 @@ const authRouter = express.Router();
 authRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'email']}));
 authRouter.get('/google/callback', passport.authenticate('google'), (req, res) => {
     try {
-        res.redirect('http://localhost:5173/playlists');
+        console.log(req.user)
+        res.redirect(process.env.FRONT_END_URI);
     } catch (error) {
         console.log(error.message);
     }
@@ -17,7 +18,8 @@ authRouter.get('/google/callback', passport.authenticate('google'), (req, res) =
 authRouter.get('/github', passport.authenticate('github', { scope: ['profile', 'email'] }));
 authRouter.get('/github/callback', passport.authenticate('github'), (req, res) => {
     try {
-        res.redirect('http://localhost:5173/playlists');
+        console.log(req.user)
+        res.redirect(process.env.FRONT_END_URI);
     } catch (error) {
         console.log(error.message);
     }
