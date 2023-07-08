@@ -29,7 +29,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-[![GrooveBuddy Screen Shot](https://github.com/pauloruzanovsky/personal-portfolio/blob/main/src/assets/wassupImage.png?raw=true)](https://groove-buddy.netlify.app)
+[![GrooveBuddy Screen Shot](https://github.com/pauloruzanovsky/personal-portfolio/blob/main/src/assets/grooveBuddyImage.png?raw=true)](https://groove-buddy.netlify.app)
 
 * Auth implemented for Google or Github login.
 * Create and update playlists, searching songs through Spotify API.
